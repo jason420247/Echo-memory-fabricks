@@ -1,0 +1,17 @@
+# Node / JS
+node_modules/
+npm-debug.log*
+*.tgz
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.venv/
+
+# Local runtime & scratch state
+.emf-local/
+*.tmp
+.DS_Store

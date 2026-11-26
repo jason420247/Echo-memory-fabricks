@@ -1,0 +1,20 @@
+version: 2.1
+
+jobs:
+  deterministic-smoke-sentinel:
+    docker:
+      - image: cimg/node:22.14
+    steps:
+      - checkout
+      - run:
+          name: Run Bricks 1-8 Unit Battery, Cold-Harness & Publication Sentinel
+          command: |
+            node --test tests/fabricks.test.mjs
+            node bin/emf.mjs cold-harness
+            node bin/emf.mjs audit-sentinel
+            node bin/emf.mjs ip-ledger
+
+workflows:
+  echo-fabricks-smoke:
+    jobs:
+      - deterministic-smoke-sentinel

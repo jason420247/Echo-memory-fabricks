@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "echo-memory-fabricks"
+version = "0.1.0"
+description = "Stdlib-only Python (-S compatible) reference implementation of Echo-Memory-Fabricks (Base-243 ternary codec, GF(4) VSA, Belnap-Dunn 4-valued logic, and per-observer adaptive Channel-Echo kernel)."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { file = "LICENSE" }
+authors = [{ name = "jason420247" }]
+dependencies = []
+
+[tool.setuptools]
+package-dir = {"" = "python"}
+
+[tool.setuptools.packages.find]
+where = ["python"]

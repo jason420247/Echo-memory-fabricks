@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Echo-Memory-Fabricks — Lattice, Tier & Channel-Echo Inspector</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --panel: #131b33;
+      --border: #263359;
+      --text: #e6ecff;
+      --muted: #93a4d4;
+      --accent: #5eead4;
+      --accent2: #818cf8;
+      --warn: #fbbf24;
+      --ok: #34d399;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 24px;
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.45;
+    }
+    header {
+      max-width: 1120px;
+      margin: 0 auto 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 12px;
+    }
+    h1 { font-size: 1.35rem; margin: 0; letter-spacing: -0.01em; }
+    .badge {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.75rem;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(94, 234, 212, 0.12);
+      color: var(--accent);
+      border: 1px solid rgba(94, 234, 212, 0.35);
+    }
+    .grid {
+      max-width: 1120px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 16px;
+    }
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+    }
+    .card h2 {
+      font-size: 0.95rem;
+      margin: 0 0 10px;
+      color: var(--accent);
+    }
+    .tier-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+    .tier-pill {
+      font-size: 0.75rem;
+      font-family: ui-monospace, monospace;
+      padding: 4px 8px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.03);
+      cursor: pointer;
+    }
+    .tier-pill.active {
+      border-color: var(--accent);
+      background: rgba(94, 234, 212, 0.15);
+      color: var(--text);
+    }
+    .controls {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+    .controls label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+    input[type="range"] { width: 160px; accent-color: var(--accent); }
+    select, button {
+      background: #0d1428;
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 5px 10px;
+      font-size: 0.8rem;
+      cursor: pointer;
+    }
+    button:hover { border-color: var(--accent); }
+    canvas {
+      width: 100%;
+      height: 180px;
+      background: #090e1c;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      display: block;
+    }
+    .mono-out {
+      font-family: ui-monospace, monospace;
+      font-size: 0.76rem;
+      background: #090e1c;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 10px;
+      color: var(--muted);
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>Echo-Memory-Fabricks — Offline Substrate Inspector</h1>
+      <span style="color: var(--muted); font-size: 0.82rem;">8 Composable Bricks • 7-Tier + Seed-RAM • Base-243 VSA • Channel-Echo Kernel</span>
+    </div>
+    <span class="badge">v0.1.0 • LOCAL_CPU</span>
+  </header>
+
+  <main class="grid">
+    <section class="card" style="grid-column: 1 / -1;">
+      <h2>Brick 5 — Per-Observer Dual-Window Adaptive Channel-Echo Kernel</h2>
+      <div class="controls" style="flex-direction: row; flex-wrap: wrap; gap: 20px;">
+        <label>
+          Burst Peak Amplitude: <strong id="ampVal">-5.2</strong>
+          <input id="ampSlider" type="range" min="0.5" max="7.0" step="0.1" value="5.2" />
+        </label>
+        <label>
+          Engagement Gate (g_engage): <strong id="gateVal">2.0</strong>
+          <input id="gateSlider" type="range" min="1.0" max="4.0" step="0.1" value="2.0" />
+        </label>
+        <span id="echoStats" style="font-family: ui-monospace, monospace; color: var(--ok);"></span>
+      </div>
+      <canvas id="echoCanvas" width="960" height="190"></canvas>
+    </section>
+
+    <section class="card">
+      <h2>Brick 1 — 7-Tier Lifecycle &amp; Seed-RAM Inspector</h2>
+      <div class="tier-list" id="tierPills"></div>
+      <div class="mono-out" id="tierDetail"></div>
+    </section>
+
+    <section class="card">
+      <h2>Brick 2 &amp; 3 — Belnap-Dunn Bilattice &amp; Base-243 Packing</h2>
+      <div class="controls">
+        <label>
+          Source A Epistemic State:
+          <select id="belnapA">
+            <option value="TRUE">TRUE (1)</option>
+            <option value="FALSE">FALSE (0)</option>
+            <option value="NEITHER">NEITHER (Omega)</option>
+            <option value="BOTH">BOTH (Bot)</option>
+          </select>
+        </label>
+        <label>
+          Source B Epistemic State:
+          <select id="belnapB">
+            <option value="FALSE">FALSE (0)</option>
+            <option value="TRUE">TRUE (1)</option>
+            <option value="NEITHER">NEITHER (Omega)</option>
+            <option value="BOTH">BOTH (Bot)</option>
+          </select>
+        </label>
+      </div>
+      <div class="mono-out" id="belnapOut"></div>
+    </section>
+  </main>
+
+  <script>
+    const TIER_INFO = {
+      FLUID_KINETIC: 'Tier 0 (In-Flight): Requires Artifact + Co-Referential Fill.\nIncomplete intakes remain PENDING_FILL (NEITHER / Omega) and cannot promote.',
+      TICK_RAM: 'Tier 1 (Tick Working Memory): Holds only current tick state.\nUnpromoted entries evaporate cleanly on advanceTick().',
+      HOLD_RAM: 'Tier 2 (Session Context): Active curated working buffer.\nRoutes resolved insights to SOLID_STATE and open brackets to SEED_RAM.',
+      SEED_RAM: 'Tier 7 (Passive Resonance Traps): Dormant hyperdimensional traps for open questions & lost temporal brackets.\nNever nags; emits passive ECHO_CATCH when rhyming intakes arrive.',
+      SOLID_STATE: 'Tier 3 (Curated Mutable Store): Backed by Base-243 (5 trits/byte) FBRK pages + Homeostatic L1/L2/L3 CAS.',
+      ROM: 'Tier 4 (Immutable Canon): Sealed with adjudication verdict + SHA-256 Inverse-Named Commit Journal.\nDirect edits throw ROM_IMMUTABLE_VIOLATION.',
+      CASCADE_HOLD: 'Tier 5/6 (Temporal Lineage): Rolls up ROM + open thread bands (<14d / 14-60d / 60d+) with mandatory oldest-thread naming.'
+    };
+
+    const pillsEl = document.getElementById('tierPills');
+    const detailEl = document.getElementById('tierDetail');
+    let activeTier = 'SEED_RAM';
+
+    function renderTiers() {
+      pillsEl.innerHTML = '';
+      for (const key of Object.keys(TIER_INFO)) {
+        const btn = document.createElement('button');
+        btn.className = 'tier-pill' + (key === activeTier ? ' active' : '');
+        btn.textContent = key;
+        btn.onclick = () => { activeTier = key; renderTiers(); };
+        pillsEl.appendChild(btn);
+      }
+      detailEl.textContent = TIER_INFO[activeTier];
+    }
+
+    const SUP = { NEITHER: [0, 0], TRUE: [1, 0], FALSE: [0, 1], BOTH: [1, 1] };
+    function fromSup(t, f) { return t && f ? 'BOTH' : t ? 'TRUE' : f ? 'FALSE' : 'NEITHER'; }
+
+    function updateBelnap() {
+      const a = document.getElementById('belnapA').value;
+      const b = document.getElementById('belnapB').value;
+      const [ta, fa] = SUP[a];
+      const [tb, fb] = SUP[b];
+      const negA = fromSup(fa, ta);
+      const tMeet = fromSup(ta && tb, fa || fb);
+      const kMerge = fromSup(ta || tb, fa || fb);
+      const sampleTrits = [1, -1, 0, 1, 1];
+      const pow3 = [1, 3, 9, 27, 81];
+      const byteVal = sampleTrits.reduce((acc, t, k) => acc + (t + 1) * pow3[k], 0);
+      document.getElementById('belnapOut').textContent =
+        `~${a}              = ${negA}\n` +
+        `${a} AND_t ${b}     = ${tMeet}\n` +
+        `${a} MERGE_k ${b}   = ${kMerge} ${kMerge === 'BOTH' ? '(Quarantined Ambiguity — No Overwrite)' : ''}\n` +
+        `Base-243 [1,-1,0,1,1] -> byte 0x${byteVal.toString(16).toUpperCase()} (${byteVal}/242, 5 trits/byte)`;
+    }
+
+    function drawEcho() {
+      const peak = parseFloat(document.getElementById('ampSlider').value);
+      const gEngage = parseFloat(document.getElementById('gateSlider').value);
+      document.getElementById('ampVal').textContent = (-peak).toFixed(1);
+      document.getElementById('gateVal').textContent = gEngage.toFixed(1);
+
+      const signs = [1, -1, 1, 1, -1, -1, 1, -1, 1, -1, -1, 1, 1, -1, 1, -1];
+      const stream = [];
+      for (let i = 0; i < 28; i++) stream.push(signs[i % 16] * (0.82 + (i % 3) * 0.14));
+      for (let k = 0; k < 14; k++) stream.push(-peak * Math.exp(-0.08 * k));
+      for (let i = 0; i < 18; i++) stream.push(signs[(i + 3) % 16] * 0.9);
+
+      const wFast = 8, wSlow = 32, lambdaMax = 4.0;
+      const sqHist = [];
+      const zPrimes = [], zTildes = [], engagedFlags = [];
+      let engagedCount = 0;
+
+      stream.forEach((z, idx) => {
+        const n = idx + 1;
+        sqHist.push(z * z);
+        if (sqHist.length > wSlow) sqHist.shift();
+        let zT = z, eng = false;
+        if (n >= wFast) {
+          const vF = sqHist.slice(-wFast).reduce((a, b) => a + b, 0) / wFast;
+          const vS = sqHist.reduce((a, b) => a + b, 0) / sqHist.length;
+          const lam = Math.min(lambdaMax, Math.max(1.0, vF / Math.max(vS, 1e-12)));
+          eng = Math.abs(z) > gEngage && lam > 1.0;
+          if (eng) {
+            zT = z / Math.sqrt(lam);
+            engagedCount++;
+          }
+        }
+        zPrimes.push(z);
+        zTildes.push(zT);
+        engagedFlags.push(eng);
+      });
+
+      document.getElementById('echoStats').textContent =
+        engagedCount === 0
+          ? 'DORMANT (Bit-Identical Reduction: z_tilde === z_prime)'
+          : `ENGAGED (${engagedCount} ticks whitened)`;
+
+      const canvas = document.getElementById('echoCanvas');
+      const ctx = canvas.getContext('2d');
+      const W = canvas.width, H = canvas.height;
+      ctx.clearRect(0, 0, W, H);
+
+      const maxAbs = Math.max(7.2, peak + 0.5);
+      const toX = (i) => 24 + (i / (stream.length - 1)) * (W - 48);
+      const toY = (v) => H / 2 - (v / maxAbs) * (H * 0.42);
+
+      // Zero line
+      ctx.strokeStyle = '#263359';
+      ctx.beginPath();
+      ctx.moveTo(24, H / 2);
+      ctx.lineTo(W - 24, H / 2);
+      ctx.stroke();
+
+      // Highlight engaged ticks
+      ctx.fillStyle = 'rgba(94, 234, 212, 0.10)';
+      engagedFlags.forEach((e, i) => {
+        if (e) {
+          const x = toX(i);
+          ctx.fillRect(x - 6, 8, 12, H - 16);
+        }
+      });
+
+      // Raw zPrime
+      ctx.strokeStyle = '#fbbf24';
+      ctx.lineWidth = 1.6;
+      ctx.beginPath();
+      zPrimes.forEach((v, i) => (i === 0 ? ctx.moveTo(toX(i), toY(v)) : ctx.lineTo(toX(i), toY(v))));
+      ctx.stroke();
+
+      // Whitened zTilde
+      ctx.strokeStyle = '#5eead4';
+      ctx.lineWidth = 2.2;
+      ctx.beginPath();
+      zTildes.forEach((v, i) => (i === 0 ? ctx.moveTo(toX(i), toY(v)) : ctx.lineTo(toX(i), toY(v))));
+      ctx.stroke();
+    }
+
+    document.getElementById('ampSlider').oninput = drawEcho;
+    document.getElementById('gateSlider').oninput = drawEcho;
+    document.getElementById('belnapA').onchange = updateBelnap;
+    document.getElementById('belnapB').onchange = updateBelnap;
+
+    renderTiers();
+    updateBelnap();
+    drawEcho();
+  </script>
+</body>
+</html>
