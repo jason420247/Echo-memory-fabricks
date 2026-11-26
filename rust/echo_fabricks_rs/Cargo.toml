@@ -1,0 +1,8 @@
+[package]
+name = "echo_fabricks_rs"
+version = "0.1.0"
+edition = "2021"
+description = "Zero-crate pure-std Rust DELEGATE-B polyglot adjudicator for Echo-Memory-Fabricks (FIPS 180-4 SHA-256, Mulberry32, Base-243 FBRK codec, Belnap-Dunn bilattice, Channel-Echo kernel, and SteeringGate)."
+license-file = "../../LICENSE"
+
+[dependencies]

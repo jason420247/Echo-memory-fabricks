@@ -1,7 +1,7 @@
 {
   "name": "echo-memory-fabricks",
-  "version": "0.1.0",
-  "description": "Zero-dependency multi-tier cognitive memory fabric SDK: 7-tier staged promotion with Seed-RAM, Belnap-Dunn 4-valued epistemic & inverse-named ledger, Base-243 / GF(4) VSA associative storage, Temporal-Bracket Echo Reconstruction, Adaptive Channel-Echo kernel, Cellular Sheaf CRDT sync, and signed session capsules.",
+  "version": "0.2.0",
+  "description": "Zero-dependency polyglot multi-tier cognitive memory fabric SDK: 12 composable bricks across 7-tier staged promotion + Seed-RAM, Belnap-Dunn 4-valued epistemic & inverse-named ledger, Base-243 / GF(4) VSA, Temporal-Bracket Echo Reconstruction, Channel-Echo kernel, Sheaf-CRDT, cross-substrate translators, Back-to-Self return composites, Push/Pull judgment routing, and Node/Python/Rust polyglot adjudication.",
   "type": "module",
   "main": "./src/index.mjs",
   "exports": {
@@ -14,6 +14,11 @@
     "./sheaf-crdt": "./src/sheaf-crdt/index.mjs",
     "./capsule": "./src/capsule/index.mjs",
     "./actuation": "./src/actuation/index.mjs",
+    "./translators": "./src/translators/index.mjs",
+    "./composites": "./src/composites/index.mjs",
+    "./judgment": "./src/judgment/index.mjs",
+    "./multitrack": "./src/multitrack/index.mjs",
+    "./coarchitect": "./src/coarchitect/index.mjs",
     "./skills": "./src/skills/compiler.mjs",
     "./harness": "./src/harness/cold-harness.mjs"
   },
@@ -27,12 +32,14 @@
   "scripts": {
     "test": "node --test tests/*.test.mjs",
     "test:python": "python3 -S python/echo_fabricks/core.py --self-test --json",
+    "test:polyglot": "node bin/emf.mjs polyglot",
+    "test:push-sim": "node bin/emf.mjs test-push-sim",
     "benchmark": "node tests/benchmark-cohort.mjs",
     "audit:sentinel": "node bin/emf.mjs audit-sentinel",
     "ledger:ip": "node bin/emf.mjs ip-ledger --write",
     "cold-harness": "node bin/emf.mjs cold-harness",
     "compile:skills": "node bin/emf.mjs compile-skills",
-    "verify:all": "npm test && npm run test:python && npm run compile:skills && npm run benchmark && npm run cold-harness && npm run audit:sentinel"
+    "verify:all": "npm test && npm run test:python && npm run test:polyglot && npm run compile:skills && npm run benchmark && npm run cold-harness && npm run audit:sentinel"
   },
   "keywords": [
     "memory-fabric",
@@ -43,6 +50,7 @@
     "belnap-dunn",
     "merkle-crdt",
     "cellular-sheaf",
+    "polyglot",
     "mcp",
     "agent-skills"
   ],

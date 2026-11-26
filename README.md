@@ -1,12 +1,12 @@
 # Echo-Memory-Fabricks
 
-**Zero-dependency, cross-platform (`Node.js >= 22` ESM + `Python >= 3.11 -S` stdlib-only) multi-tier cognitive memory fabric, associative VSA codec, adaptive transient kernel, and cross-substrate capsule suite.**
+**Zero-dependency, polyglot (`Node.js >= 22` ESM + `Python >= 3.11 -S` stdlib-only + `Rust 1.100` `std`-only) multi-tier cognitive memory fabric, associative VSA codec, adaptive transient kernel, cross-substrate translator, and governed actuation suite.**
 
 ---
 
-## Architectural Overview: The 8 Composable "Fabricks"
+## Architectural Overview: The 12 Composable "Fabricks"
 
-`Echo-memory-fabricks` weaves **8 independent, deterministic building bricks** into a staged memory and verification substrate with zero third-party runtime dependencies:
+`Echo-memory-fabricks` (`v0.2.0`) weaves **12 independent, deterministic building bricks** into a staged memory, cross-substrate translation, and polyglot verification substrate with zero third-party runtime dependencies:
 
 | Brick | Module | Core Capability & Enforced Invariants |
 | :--- | :--- | :--- |
@@ -18,47 +18,53 @@
 | **Brick 6** | [`src/sheaf-crdt`](./src/sheaf-crdt/index.mjs) | **Merkle-CRDT, Cellular Sheaf Consensus & Blind Twin Membrane**: Concurrent conflicting multi-agent writes surface as `DISCOVERED_AMBIGUITY` (`BOTH`) rather than silent overwrites; Sheaf Laplacian diffusion diagnoses harmonic coboundary obstructions; `createBlindTwinProjection` strips evaluation rubrics prior to verifier subagent dispatch. |
 | **Brick 7** | [`src/capsule`](./src/capsule/index.mjs) | **6-Field Signed Context Actuation Capsules**: Mints, verifies, and renders SHA-256 sealed session handoff capsules (`name`, `function`, `temporalProgression`, `startAnchor`, `closeOutState`, `deliberateFutureContextHook`). |
 | **Brick 8** | [`src/actuation`](./src/actuation/index.mjs) | **Actuation Bridge, `ProvenanceChain` & Publication Sentinel**: Per-surface branch guards (`actuation/<surface>/<slug>`), actor collision rejection (blocking bare `"copilot"`), `OPERATOR | SYSTEM | COMBINED` provenance decomposition & `CreditAssertion`, Pre-Existing Background-IP Ledger (`specs/background-ip-ledger.json`), and the One-Way Downstream `Publication-Boundary Sentinel`. |
+| **Brick 9** | [`src/translators`](./src/translators/index.mjs) | **Sanitizing Cross-Substrate Translators & COA Procedurals**: Converts host paths to `vol://` logical URIs, bridges sibling `<!-- LEDGER -->` Markdown headers <-> `Cascade-Hold` (auto-detecting missing aging bands & unnamed stale threads), converts `.tswap` <-> `.fbrk`, and generates Course-of-Action (`COA`) decision packets across the 7 disturbance tiers. |
+| **Brick 10** | [`src/composites`](./src/composites/index.mjs) | **Self-Publishing Distiller & Back-to-Self Return Composite**: Audits zero-dependency decoupling and packages verified Git branches into portable `.bundle` + `return-composite.json` archives with a 4-Gate Offline Quarantine Admission Verifier (`0` lifecycle hooks, `0` dynamic-eval taint, `git bundle verify`, `COLD_PASS`). |
+| **Brick 11** | [`src/judgment`](./src/judgment/index.mjs) | **Push / Pull Meta-Decision & Judgment Router**: 6-Gauge Outbound `PushRoutingSlip` (`TargetRing`, `Sentinel`, `WaveLag >= 1`, `Alpha/Beta/Gamma` + `PerceptionTiming`, `Trinity`, `InverseRetreatOp`) and Inbound Pull IPI / Supply-Chain / `BELNAP.BOTH` Quarantine Gate. |
+| **Brick 12** | [`src/multitrack`](./src/multitrack/index.mjs), [`src/coarchitect`](./src/coarchitect/index.mjs) & [`rust/echo_fabricks_rs`](./rust/echo_fabricks_rs/src/main.rs) | **Polyglot Triad, Dual-Track Controller & Co-Architect Registry**: 3-runtime bit-for-bit parity (`Node 22` V8 + `Python 3.12 -S` + pure-`std` `Rust 1.100` `DELEGATE-B` with native FIPS 180-4 SHA-256 & `SteeringGate`), $S_3$ Phase Router, Speculative/Verified Dual-Track execution, and Trinity SPOF role gauging. |
 
 ---
 
-## Quickstart & Deterministic Verification
+## Quickstart & Deterministic Polyglot Verification
 
-Requires **Node.js >= 22** (and **Python >= 3.11** for cross-runtime `python3 -S` parity checks). Zero `npm install` packages required.
+Requires **Node.js >= 22**, **Python >= 3.11** (`-S` stdlib-only), and **Rust (`rustc`)** for 3-language polyglot consensus. Zero external npm, PyPI, or Cargo crates required.
 
 ```bash
-# Run full verification suite (Node tests, Python -S parity, SkillCompiler, N=5 benchmarks, Cold-Harness & Sentinel)
+# Run full verification battery (13 test suites, Python -S, Rust std 3-way parity, 5 skills, N=5 benchmarks, Cold-Harness & Sentinel)
 npm run verify:all
 
-# Inspect live substrate status & CLI commands
+# CLI control-plane commands
 node bin/emf.mjs status
-node bin/emf.mjs cold-harness
-node bin/emf.mjs vsa
-node bin/emf.mjs reconstruct
-node bin/emf.mjs channel-echo
-node bin/emf.mjs capsule
+node bin/emf.mjs polyglot
+node bin/emf.mjs translate
+node bin/emf.mjs coa
+node bin/emf.mjs push-judgment
+node bin/emf.mjs test-push-sim
+node bin/emf.mjs return-composite
 node bin/emf.mjs ip-ledger
 ```
 
-### Measured `LOCAL_CPU` Cohort Summary (`N = 5` Seeds `101..105`)
+### Measured `LOCAL_CPU` Cohort & Polyglot Consensus Summary
 
 Full machine-verifiable results are sealed in [`specs/benchmark-dossier.json`](./specs/benchmark-dossier.json):
-- **`Base-243` Packing Density**: `5.00 trits/byte` (`200` payload bytes for `1,000` balanced trits vs. `1,000` bytes uncompressed).
+- **3-Runtime Polyglot Consensus**: `100%` bit-for-bit agreement across `Node 22` (V8), `Python 3.12 -S` (CPython), and `Rust 1.100` (`rustc` pure-`std`) on `Mulberry32`, `Base-243` `FBRK` wire frames, `SHA-256`, and `ChannelEchoKernel` step traces.
+- **`Base-243` Packing Density**: `5.00 trits/byte` (`200` payload bytes for `1,000` balanced trits).
 - **Quaternary Superposed Associative Frame Recall (`8` bound slots, `D = 1024`)**: `1.000` (`100%` exact recall across all 5 seeds).
-- **Channel-Echo Median Lag-1..8 Autocorrelation Energy Reduction (`Gate W >= 0.25`)**: `0.59503` (`59.5%` reduction on transient bursts).
-- **Dormant Nested Reduction**: `100%` IEEE-754 bit-identical (`Object.is(zTilde, zPrime) === true`) when unengaged.
-- **Verified-Trace Skill Compiler Adversarial Gate**: `5/5` (`100%`) prompt-injection, bidi-spoofing, and pipe-exec payloads blocked.
+- **Channel-Echo Median Lag-1..8 Autocorrelation Energy Reduction (`Gate W >= 0.25`)**: `0.59503` (`59.5%` reduction on transient bursts) + `100%` IEEE-754 bit-identical dormancy.
+- **Local Bare-Remote Pre-Receive Push Simulation**: Adversarial leak push `100%` rejected by server-side `pre-receive` Sentinel hook; clean `actuation/*` push verified & accepted with `0` GitHub `origin` network writes.
 
 ---
 
-## Portable Agent Skills, MCP Server & Visual Inspector
+## Portable Agent Skills (5), MCP Server (14 Tools) & Offline Inspector
 
 - **Portable Skills (`skills/*/SKILL.md`)**:
   - [`echo-memory-fabric`](./skills/echo-memory-fabric/SKILL.md)
   - [`echo-memory-reconstruct`](./skills/echo-memory-reconstruct/SKILL.md)
   - [`echo-capsule-handoff`](./skills/echo-capsule-handoff/SKILL.md)
   - [`echo-publication-guard`](./skills/echo-publication-guard/SKILL.md)
-- **Stdio MCP Server**: Run `node mcp/server.mjs` to expose 10 deterministic JSON-RPC 2.0 MCP tools (`fabric_ingest_fluid`, `fabric_promote_tier`, `fabric_associative_search`, `fabric_reconstruct_bracket`, `fabric_channel_echo_eval`, `fabric_mint_capsule`, `fabric_provenance_record`, `fabric_audit_sentinel`, `fabric_cold_harness`, `fabric_attach_context_fill`).
-- **Offline Visual Inspector**: Open [`ui/inspector.html`](./ui/inspector.html) in any browser to interactively tune the Channel-Echo kernel, inspect the 7-Tier + `Seed-RAM` automaton, and test Belnap–Dunn / `Base-243` operations.
+  - [`echo-polyglot-push-guard`](./skills/echo-polyglot-push-guard/SKILL.md)
+- **Stdio MCP Server (`v0.2.0`)**: Run `node mcp/server.mjs` to expose 14 deterministic JSON-RPC 2.0 stdio tools across Bricks 1–12.
+- **Offline Visual Inspector**: Open [`ui/inspector.html`](./ui/inspector.html) in any browser.
 
 ---
 
@@ -66,4 +72,4 @@ Full machine-verifiable results are sealed in [`specs/benchmark-dossier.json`](.
 
 See [`LICENSE`](./LICENSE), [`LICENSE-APACHE-2.0`](./LICENSE-APACHE-2.0), [`COMMERCIAL-LICENSE.md`](./COMMERCIAL-LICENSE.md), and [`NOTICE`](./NOTICE):
 - **`L1` Interoperability Specifications, Schemas & Docs** (`specs/**`, `docs/**`, `README.md`): **Apache License 2.0** (with `NOTICE` provenance attribution preservation).
-- **`L2` Executable Runtime Engines, Skills, MCP & UI** (`src/**`, `python/**`, `mcp/**`, `bin/**`, `skills/**`, `ui/**`, `tests/**`): **Source-Available Non-Competing & Verification Grant**, with 100% sole copyright, commercial production licensing, consulting/contracting Pre-Existing Background-IP (`specs/background-ip-ledger.json`), and private-expense rights reserved by the Copyright Holder (`jason420247`).
+- **`L2` Executable Runtime Engines (`Node`, `Python`, `Rust`), Skills, MCP & UI** (`src/**`, `python/**`, `rust/**`, `mcp/**`, `bin/**`, `skills/**`, `ui/**`, `tests/**`): **Source-Available Non-Competing & Verification Grant**, with 100% sole copyright, commercial production licensing, consulting/contracting Pre-Existing Background-IP (`specs/background-ip-ledger.json`), and private-expense rights reserved by the Copyright Holder (`jason420247`).

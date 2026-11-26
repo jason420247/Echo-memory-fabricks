@@ -13,5 +13,6 @@ build/
 
 # Local runtime & scratch state
 .emf-local/
+rust/**/target/
 *.tmp
 .DS_Store

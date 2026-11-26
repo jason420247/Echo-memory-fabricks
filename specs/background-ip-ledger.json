@@ -2,7 +2,7 @@
   "schemaVersion": "echo-fabricks.background-ip-ledger/v1",
   "project": "Echo-memory-fabricks",
   "copyrightHolder": "jason420247",
-  "generatedAt": "2026-11-25T18:00:00.000Z",
+  "generatedAt": "2026-11-25T19:00:00.000Z",
   "privateExpenseAttestation": "Conceived, architected, and reduced to practice exclusively at private expense prior to any external client, commercial, or government contract.",
   "provenanceDefault": {
     "origin": "COMBINED",
@@ -19,7 +19,7 @@
       }
     ]
   },
-  "moduleCount": 35,
+  "moduleCount": 45,
   "modules": [
     {
       "path": ".circleci/config.yml",
@@ -29,20 +29,20 @@
     },
     {
       "path": ".github/workflows/ci.yml",
-      "bytes": 1397,
-      "sha256": "33aa4f5ec85b15e17b55111b51aab7c41c45e0d1180a9202aaca311161ce6752",
+      "bytes": 1523,
+      "sha256": "4f0e9fd2febdc20748be4837fc9f17c67cfb771a2e4ede85a7c448bdc1e6f1b3",
       "licenseTier": "L2_SOURCE_AVAILABLE_BACKGROUND_IP"
     },
     {
       "path": ".gitignore",
-      "bytes": 173,
-      "sha256": "99643ad2ad3d4d72fc0d2e9c018f913b59aae02344438767cc2f34c84ca7b70c",
+      "bytes": 189,
+      "sha256": "e1832710f9c3685dccc6e676d985198623567f2170053f4e66e7d264ca8324e6",
       "licenseTier": "L2_SOURCE_AVAILABLE_BACKGROUND_IP"
     },
     {
       "path": "bin/emf.mjs",
-      "bytes": 8123,
-      "sha256": "3bca2bde7bb835a9cfc9bd0edb696da2eb83727c573b1b437ca732b29b8807b7",
+      "bytes": 13168,
+      "sha256": "6120e697500f0fe1f2eb99c4a53d5faf2d5a7a5d85dd154d36535eb3c44ba4ae",
       "licenseTier": "L2_SOURCE_AVAILABLE_BACKGROUND_IP"
     },
     {
@@ -65,8 +65,8 @@
     },
     {
       "path": "mcp/server.mjs",
-      "bytes": 11144,
-      "sha256": "70ec0a86c2cbd47bb28d04381c3c90a9fb132fc2587a980b2089cd47e2a00809",
+      "bytes": 13816,
+      "sha256": "3d54ffc15440de25e39293a68fc4258f88ed5f91a49508c85927a11cfb71543a",
       "licenseTier": "L2_SOURCE_AVAILABLE_BACKGROUND_IP"
     },
     {
@@ -77,8 +77,8 @@
     },
     {
       "path": "package.json",
-      "bytes": 1964,
-      "sha256": "d76068793c4ddf5ef005cfcbe5652dbc4a34032106e4ffddaf271cf1ea6b4173",
+      "bytes": 2455,
+      "sha256": "781e71dfa9b12c0551e410e6dd4e10913dccad59710c7aa78f6cc5d668ba8386",
       "licenseTier": "L2_SOURCE_AVAILABLE_BACKGROUND_IP"
     },
     {
@@ -101,9 +101,21 @@
     },
     {
       "path": "README.md",
-      "bytes": 6887,
-      "sha256": "423dbeee5966ff7aa39ddb82fc48f20baff3e7d96297b31a0e7412c9d4c1b605",
+      "bytes": 8701,
+      "sha256": "0d12fea229dbe0e22ab4faf7371b201dc6facea34e77e469a6a0dba466b5d1bf",
       "licenseTier": "L1_OPEN_SPEC_APACHE_2_0"
+    },
+    {
+      "path": "rust/echo_fabricks_rs/Cargo.toml",
+      "bytes": 333,
+      "sha256": "2267ec28703cf34865b05f307bc1017ee412fac0a3ba674e3a28d84cd4f61c39",
+      "licenseTier": "L2_SOURCE_AVAILABLE_BACKGROUND_IP"
+    },
+    {
+      "path": "rust/echo_fabricks_rs/src/main.rs",
+      "bytes": 15281,
+      "sha256": "9ca2a35363d4d14cc1c59f141ee1636002efa7c6fb674a9f941efce3fda37d4c",
+      "licenseTier": "L2_SOURCE_AVAILABLE_BACKGROUND_IP"
     },
     {
       "path": "skills/echo-capsule-handoff/SKILL.md",
@@ -121,6 +133,12 @@
       "path": "skills/echo-memory-reconstruct/SKILL.md",
       "bytes": 1601,
       "sha256": "fa83274eded0a95b8c82bcf517d05d6fab1c8ac2d2c31f00a0e99ac56ef72ba2",
+      "licenseTier": "L2_SOURCE_AVAILABLE_BACKGROUND_IP"
+    },
+    {
+      "path": "skills/echo-polyglot-push-guard/SKILL.md",
+      "bytes": 1700,
+      "sha256": "663ac9c39829c6886e9c16c3c0a38f0ee24676b46826ac93940152f0cd1bbdfd",
       "licenseTier": "L2_SOURCE_AVAILABLE_BACKGROUND_IP"
     },
     {
@@ -160,6 +178,18 @@
       "licenseTier": "L2_SOURCE_AVAILABLE_BACKGROUND_IP"
     },
     {
+      "path": "src/coarchitect/index.mjs",
+      "bytes": 5490,
+      "sha256": "ed9f4f8fcd6b419dce1230be62a2d9b59adb8e044207b215b6b0dfda414e0e98",
+      "licenseTier": "L2_SOURCE_AVAILABLE_BACKGROUND_IP"
+    },
+    {
+      "path": "src/composites/index.mjs",
+      "bytes": 8529,
+      "sha256": "8f4a76d2094b98fb00884c6745fd53a947a1e3ff3d3d84861df3f69a7c04a8bb",
+      "licenseTier": "L2_SOURCE_AVAILABLE_BACKGROUND_IP"
+    },
+    {
       "path": "src/epistemic/index.mjs",
       "bytes": 11349,
       "sha256": "25a9338ba892d252519f8a3c2057a573d63a2e34460066f51b8c8ff157c40362",
@@ -172,9 +202,27 @@
       "licenseTier": "L2_SOURCE_AVAILABLE_BACKGROUND_IP"
     },
     {
+      "path": "src/harness/local-push-sim.mjs",
+      "bytes": 8477,
+      "sha256": "bc69601cda8921cdd6ea87f475e1a3880a3a2faab9141fc171b38266b2287ce8",
+      "licenseTier": "L2_SOURCE_AVAILABLE_BACKGROUND_IP"
+    },
+    {
       "path": "src/index.mjs",
-      "bytes": 492,
-      "sha256": "e711b248246b2395e8e4baad04cbbc0e21b3d21dd121d48580b8dcfb91618ca7",
+      "bytes": 755,
+      "sha256": "727ba0176c7aa1d42f63cb82725c31911a9960d9c7a962975845d69118ae0abd",
+      "licenseTier": "L2_SOURCE_AVAILABLE_BACKGROUND_IP"
+    },
+    {
+      "path": "src/judgment/index.mjs",
+      "bytes": 8334,
+      "sha256": "81f632ac4820d77e53e49f58d8d23837f522d9254b73550650288b552f28c715",
+      "licenseTier": "L2_SOURCE_AVAILABLE_BACKGROUND_IP"
+    },
+    {
+      "path": "src/multitrack/index.mjs",
+      "bytes": 7425,
+      "sha256": "ddb235e7e63cdc61edcdf4054387ab7cc06b621a757b35621ecc2d92309d6230",
       "licenseTier": "L2_SOURCE_AVAILABLE_BACKGROUND_IP"
     },
     {
@@ -202,6 +250,12 @@
       "licenseTier": "L2_SOURCE_AVAILABLE_BACKGROUND_IP"
     },
     {
+      "path": "src/translators/index.mjs",
+      "bytes": 12472,
+      "sha256": "88de9a62aa9eedf8fdfdfa085815974b63c7bce6434ef6e0f8c2286f7bd61e7a",
+      "licenseTier": "L2_SOURCE_AVAILABLE_BACKGROUND_IP"
+    },
+    {
       "path": "src/vsa/index.mjs",
       "bytes": 16629,
       "sha256": "99f8964962e763a0aa09f7a23f6ad35172fcbc56caa2dfd16a558c7b2c3886be",
@@ -222,7 +276,13 @@
     {
       "path": "tests/parity-and-mcp.test.mjs",
       "bytes": 4834,
-      "sha256": "134ae995c09b18c3769a3900def02cef78860c031d934883fc24c746630712fa",
+      "sha256": "65137dc6635c924f8e7050e286ee6ed8d92a63b2ba9b617687c40b194049c1be",
+      "licenseTier": "L2_SOURCE_AVAILABLE_BACKGROUND_IP"
+    },
+    {
+      "path": "tests/waves5-8.test.mjs",
+      "bytes": 11163,
+      "sha256": "be02ba13262a6117b58b1df289ab5f3d506a3d21523c76b7b992c37cd029f8ab",
       "licenseTier": "L2_SOURCE_AVAILABLE_BACKGROUND_IP"
     },
     {
@@ -232,5 +292,5 @@
       "licenseTier": "L2_SOURCE_AVAILABLE_BACKGROUND_IP"
     }
   ],
-  "ledgerSha256": "7c7b5ad5724a7f2d71455cf0e5cef59ecec4bdfe1c1a41a61d6ebeae6a236498"
+  "ledgerSha256": "c47ac876c8e4c10386f0538bcd857373db7e87dd42bc924ae319e127d62e269f"
 }

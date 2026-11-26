@@ -124,7 +124,7 @@ test('Wave 3: Stdio MCP server handles JSON-RPC initialize, tools/list, and tool
   });
 
   assert.equal(responses[0].result.serverInfo.name, 'echo-memory-mcp');
-  assert.equal(responses[1].result.tools.length, 10);
+  assert.equal(responses[1].result.tools.length, 14);
   const coldPayload = JSON.parse(responses[2].result.content[0].text);
   assert.equal(coldPayload.verdict, 'COLD_PASS');
 });

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Echo-Memory-Fabricks — Unified CLI Control Plane (`emf`)
+ * Echo-Memory-Fabricks — Unified CLI Control Plane (`emf` v0.2.0)
  */
 
 import fs from 'node:fs';
@@ -8,25 +8,35 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
   ACTOR_CLASSES,
+  ChannelEchoKernel,
+  DISTURBANCE_TIERS,
+  EchoReconstructionEngine,
+  MATCH_KIND,
+  MemoryFabric,
   PROVENANCE_ORIGINS,
   ProvenanceChain,
   PublicationBoundarySentinel,
-  VerifiedTraceSkillCompiler,
-  ChannelEchoKernel,
-  EchoReconstructionEngine,
-  MATCH_KIND,
-  MEMORY_TIERS,
-  MemoryFabric,
   SuperposedAssociativeFrame,
+  TARGET_RINGS,
+  VerifiedTraceSkillCompiler,
+  admitReturnComposite,
+  buildBackToSelfReturnComposite,
+  canonicalizeLogicalUri,
+  convertLegacyTswapToFbrk,
   decodeFbrkFrame,
   encodeFbrkFrame,
+  evaluatePushJudgment,
   generateBackgroundIpLedger,
+  generateCoaPacket,
   mintCapsule,
+  parseSiblingLedgerMarkdown,
   randomTernaryVector,
   renderCapsuleBriefMarkdown,
   runColdHarnessReplay,
+  runLocalTestPushSimulation,
   verifyBackgroundIpLedger,
-  verifyCapsule
+  verifyCapsule,
+  verifyThreeWayPolyglotParity
 } from '../src/index.mjs';
 
 const REPO_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -47,8 +57,9 @@ function runCli(argv = process.argv.slice(2)) {
         JSON.stringify(
           {
             package: 'echo-memory-fabricks',
-            version: '0.1.0',
-            bricksCount: 8,
+            version: '0.2.0',
+            bricksCount: 12,
+            polyglotRuntimes: ['Node >=22 ESM', 'Python >=3.11 (-S)', 'Rust 1.100 (std-only)'],
             compiledSkillsCount: skillGraph.compiledCount,
             publicationSentinel: {
               clean: scan.clean,
@@ -170,7 +181,7 @@ function runCli(argv = process.argv.slice(2)) {
       const cap = mintCapsule({
         name: 'echo-fabricks-session-handoff',
         function: 'Cross-substrate verification & rehydration anchor',
-        temporalProgression: { wave: 4, status: 'VERIFIED' },
+        temporalProgression: { wave: 8, status: 'VERIFIED' },
         startAnchor: { branch: 'actuation/antigravity/fabricks-suite' },
         closeOutState: { coldHarness: 'COLD_PASS' },
         deliberateFutureContextHook: { command: 'emf cold-harness' },
@@ -192,6 +203,145 @@ function runCli(argv = process.argv.slice(2)) {
       return verified.verified ? 0 : 1;
     }
 
+    case 'translate': {
+      const sampleMd = [
+        '# Remembrance chain — 2026-11-25',
+        '<!-- LEDGER',
+        'link: 58',
+        'covers: 2026-11-24',
+        'judgments: 12',
+        'pending_calls: 80 open, oldest 80 days',
+        '-->',
+        '## 1. Ingress',
+        '## 10. Constitutional'
+      ].join('\n');
+      const parsed = parseSiblingLedgerMarkdown(sampleMd);
+      const tswapConv = convertLegacyTswapToFbrk({
+        pageId: 'swap-01',
+        sourcePath: '/home/demo/MemorySwap/swap-01.tswap',
+        trits: Array.from(randomTernaryVector(125, 42, 0.1))
+      });
+      console.log(
+        JSON.stringify(
+          {
+            ok: true,
+            canonicalUriExample: canonicalizeLogicalUri('/home/demo/skills/test/SKILL.md'),
+            detectedLedgerFormatGaps: parsed.formatGaps,
+            tswapToFbrkSavingsRatio: tswapConv.spaceSavingsRatio,
+            tswapLogicalUri: tswapConv.logicalUri
+          },
+          null,
+          2
+        )
+      );
+      return 0;
+    }
+
+    case 'coa': {
+      const packet = generateCoaPacket({
+        packetId: 'coa-push-posture',
+        whatWeKnow: ['Local bare-remote simulation passes all 6 gauges and 3-way polyglot parity'],
+        whatWeDoNotKnow: ['Whether operator wants remote GitHub Draft PR now or later'],
+        candidateCourses: [
+          {
+            id: 'KEEP_IN_VM_AND_BUNDLE',
+            summary: 'Keep branch local in VM and emit offline Back-to-Self git bundle',
+            blastRadius: 'ALPHA',
+            inverseOp: 'DELETE_LOCAL_BUNDLE'
+          },
+          {
+            id: 'PUSH_ACTUATION_DRAFT_PR',
+            summary: 'Push actuation branch to origin and open Draft PR',
+            blastRadius: 'BETA',
+            inverseOp: 'CLOSE_PR_AND_DELETE_REMOTE_BRANCH'
+          }
+        ],
+        disturbanceTier: DISTURBANCE_TIERS.GAUGE_ASSESSMENT,
+        recommendedLeanId: 'KEEP_IN_VM_AND_BUNDLE',
+        systemCertifiableEvidence: {
+          preDefinedCriteria: 'All 6 local gauges green + 0 network writes',
+          checkableEvidence: 'Cold-Harness COLD_PASS + 3-way polyglot agreed',
+          independentSecondaryPass: true
+        }
+      });
+      console.log(JSON.stringify(packet, null, 2));
+      return 0;
+    }
+
+    case 'polyglot': {
+      const parity = verifyThreeWayPolyglotParity(20261125, REPO_ROOT);
+      console.log(JSON.stringify(parity, null, 2));
+      return parity.agreed ? 0 : 1;
+    }
+
+    case 'push-judgment': {
+      const localSimSlip = evaluatePushJudgment({
+        targetRing: TARGET_RINGS.LOCAL_BARE_SIM,
+        branchName: 'actuation/antigravity/fabricks-suite',
+        upstreamWaveLag: 2,
+        trinity: {
+          authorize: ACTOR_CLASSES.OPERATOR,
+          delegateA: 'NODE22_BUILDER',
+          delegateB: 'RUST_STD_DELEGATE_B'
+        },
+        inverseRetreatOp: { name: 'DELETE_SIM_REF' },
+        repoRootDir: REPO_ROOT
+      });
+      const remotePublicSlip = evaluatePushJudgment({
+        targetRing: TARGET_RINGS.RING_2_PUBLIC_BRANCH,
+        branchName: 'actuation/antigravity/fabricks-suite',
+        upstreamWaveLag: 2,
+        operatorExplicitWord: false,
+        trinity: {
+          authorize: ACTOR_CLASSES.OPERATOR,
+          delegateA: 'NODE22_BUILDER',
+          delegateB: 'RUST_STD_DELEGATE_B'
+        },
+        inverseRetreatOp: { name: 'DELETE_REMOTE_BRANCH' },
+        repoRootDir: REPO_ROOT
+      });
+      console.log(
+        JSON.stringify(
+          {
+            localBareSimVerdict: localSimSlip.verdict,
+            remotePublicWithoutOperatorWordVerdict: remotePublicSlip.verdict
+          },
+          null,
+          2
+        )
+      );
+      return 0;
+    }
+
+    case 'return-composite': {
+      const poly = verifyThreeWayPolyglotParity(20261125, REPO_ROOT);
+      const built = buildBackToSelfReturnComposite(REPO_ROOT, {
+        polyglotProof: poly,
+        createdAt: '2026-11-25T19:20:00.000Z'
+      });
+      const admission = admitReturnComposite(REPO_ROOT, path.dirname(built.manifestPath));
+      console.log(
+        JSON.stringify(
+          {
+            ok: admission.admitted,
+            bundleFile: path.relative(REPO_ROOT, built.bundlePath),
+            bundleBytes: built.manifest.bundleBytes,
+            bundleSha256: built.manifest.bundleSha256,
+            admission
+          },
+          null,
+          2
+        )
+      );
+      return admission.admitted ? 0 : 1;
+    }
+
+    case 'test-push-sim': {
+      const report = runLocalTestPushSimulation(REPO_ROOT);
+      console.log(JSON.stringify(report, null, 2));
+      return report.ok ? 0 : 1;
+    }
+
     case 'compile-skills': {
       const compiler = new VerifiedTraceSkillCompiler();
       const graph = compiler.compileSkillsDirectory(path.join(REPO_ROOT, 'skills'), REPO_ROOT);
@@ -210,7 +360,7 @@ function runCli(argv = process.argv.slice(2)) {
       const ledgerPath = path.join(REPO_ROOT, 'specs', 'background-ip-ledger.json');
       if (argv.includes('--write') || !fs.existsSync(ledgerPath)) {
         const ledger = generateBackgroundIpLedger(REPO_ROOT, {
-          generatedAt: '2026-11-25T18:00:00.000Z'
+          generatedAt: '2026-11-25T19:00:00.000Z'
         });
         fs.writeFileSync(ledgerPath, JSON.stringify(ledger, null, 2) + '\n', 'utf8');
         console.log(
@@ -241,7 +391,7 @@ function runCli(argv = process.argv.slice(2)) {
 
     default:
       console.error(
-        `Unknown emf command "${cmd}". Available: status, vsa, reconstruct, channel-echo, capsule, compile-skills, audit-sentinel, ip-ledger, cold-harness`
+        `Unknown emf command "${cmd}". Available: status, vsa, reconstruct, channel-echo, capsule, translate, coa, polyglot, push-judgment, return-composite, test-push-sim, compile-skills, audit-sentinel, ip-ledger, cold-harness`
       );
       return 1;
   }

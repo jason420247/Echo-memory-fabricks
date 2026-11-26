@@ -1,4 +1,4 @@
-name: Echo-Memory-Fabricks Deterministic Verification & Boundary Sentinel
+name: Echo-Memory-Fabricks Polyglot Verification & Boundary Sentinel
 
 on:
   push:
@@ -13,7 +13,7 @@ permissions:
   contents: read
 
 jobs:
-  verify-cold-harness-and-parity:
+  verify-polyglot-cold-harness-and-sentinel:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository (SHA-pinned)
@@ -29,11 +29,14 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Run Node test battery & Node<->Python -S cross-runtime byte parity
+      - name: Run Node test battery, 3-Way Polyglot Triad (Node/Python -S/Rust std) & Local Push Simulator
         run: npm test
 
       - name: Run standalone Python -S stdlib-only reference self-test
         run: npm run test:python
+
+      - name: Run explicit 3-Way Polyglot Consensus check
+        run: npm run test:polyglot
 
       - name: Compile & static-audit portable SKILL.md packages
         run: npm run compile:skills

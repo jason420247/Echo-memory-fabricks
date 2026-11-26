@@ -1,25 +1,30 @@
 #!/usr/bin/env node
 /**
- * Echo-Memory-Fabricks — Zero-Dependency Stdio MCP Server (`echo-memory-mcp`)
+ * Echo-Memory-Fabricks — Zero-Dependency Stdio MCP Server (`echo-memory-mcp` v0.2.0)
  *
- * Implements JSON-RPC 2.0 over stdio (newline-delimited JSON, compatible with MCP 2024-11-05+)
- * with strict stdout guard: console.log is redirected to stderr so stdout only carries
- * clean JSON-RPC protocol frames.
+ * Exposes 14 deterministic tools across Bricks 1-12 over JSON-RPC 2.0 stdio
+ * with strict stdout purity guard.
  */
 
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
   ACTOR_CLASSES,
-  ProvenanceChain,
-  PublicationBoundarySentinel,
-  mintCapsule,
-  runColdHarnessReplay,
-  verifyCapsule,
   ChannelEchoKernel,
+  DISTURBANCE_TIERS,
   EchoReconstructionEngine,
   MATCH_KIND,
-  MemoryFabric
+  MemoryFabric,
+  ProvenanceChain,
+  PublicationBoundarySentinel,
+  TARGET_RINGS,
+  evaluatePushJudgment,
+  generateCoaPacket,
+  mintCapsule,
+  parseSiblingLedgerMarkdown,
+  runColdHarnessReplay,
+  verifyCapsule,
+  verifyThreeWayPolyglotParity
 } from '../src/index.mjs';
 
 const REPO_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -171,6 +176,61 @@ export const MCP_TOOLS = [
       type: 'object',
       properties: {}
     }
+  },
+  {
+    name: 'fabric_translate_ledger',
+    description:
+      'Parse a sibling <!-- LEDGER --> Markdown chain header into canonical Cascade-Hold structure and detect format gaps.',
+    inputSchema: {
+      type: 'object',
+      required: ['markdownText'],
+      properties: {
+        markdownText: { type: 'string' }
+      }
+    }
+  },
+  {
+    name: 'fabric_generate_coa',
+    description:
+      'Generate a SHA-256 sealed Course-of-Action (COA) Procedural Decision Packet with disturbance tier and confirmation threshold.',
+    inputSchema: {
+      type: 'object',
+      required: ['packetId', 'whatWeKnow', 'whatWeDoNotKnow', 'candidateCourses', 'recommendedLeanId'],
+      properties: {
+        packetId: { type: 'string' },
+        whatWeKnow: { type: 'array', items: { type: 'string' } },
+        whatWeDoNotKnow: { type: 'array', items: { type: 'string' } },
+        candidateCourses: { type: 'array' },
+        disturbanceTier: { type: 'string' },
+        recommendedLeanId: { type: 'string' }
+      }
+    }
+  },
+  {
+    name: 'fabric_polyglot_parity',
+    description:
+      'Run 3-language polyglot consensus verification across Node >=22 (V8), Python 3.12 (-S), and pure-std Rust 1.100 (DELEGATE-B).',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        seed: { type: 'number' }
+      }
+    }
+  },
+  {
+    name: 'fabric_push_judgment',
+    description:
+      'Evaluate the 6-Gauge Outbound Push Judgment Router and emit a signed Push Routing Slip.',
+    inputSchema: {
+      type: 'object',
+      required: ['targetRing', 'branchName'],
+      properties: {
+        targetRing: { type: 'string' },
+        branchName: { type: 'string' },
+        upstreamWaveLag: { type: 'number' },
+        operatorExplicitWord: { type: 'boolean' }
+      }
+    }
   }
 ];
 
@@ -241,6 +301,29 @@ export function createMcpDispatcher() {
           : sentinel.scanDirectory(REPO_ROOT);
       case 'fabric_cold_harness':
         return runColdHarnessReplay({ repoRootDir: REPO_ROOT });
+      case 'fabric_translate_ledger':
+        return parseSiblingLedgerMarkdown(args.markdownText);
+      case 'fabric_generate_coa':
+        return generateCoaPacket({
+          ...args,
+          disturbanceTier: args.disturbanceTier || DISTURBANCE_TIERS.GAUGE_ASSESSMENT
+        });
+      case 'fabric_polyglot_parity':
+        return verifyThreeWayPolyglotParity(args.seed ?? 20261125, REPO_ROOT);
+      case 'fabric_push_judgment':
+        return evaluatePushJudgment({
+          targetRing: args.targetRing || TARGET_RINGS.LOCAL_BARE_SIM,
+          branchName: args.branchName,
+          upstreamWaveLag: args.upstreamWaveLag ?? 1,
+          operatorExplicitWord: Boolean(args.operatorExplicitWord),
+          trinity: {
+            authorize: ACTOR_CLASSES.OPERATOR,
+            delegateA: 'NODE22_BUILDER',
+            delegateB: 'RUST_STD_DELEGATE_B'
+          },
+          inverseRetreatOp: { name: 'REVERT_OR_DELETE_REF' },
+          repoRootDir: REPO_ROOT
+        });
       default:
         throw new Error(`UNKNOWN_MCP_TOOL: "${name}"`);
     }
@@ -254,7 +337,6 @@ export function createMcpDispatcher() {
         error: { code: -32600, message: 'Invalid JSON-RPC 2.0 request' }
       };
     }
-    // Notifications carry no id and expect no response
     if (msg.id === undefined) {
       return null;
     }
@@ -269,7 +351,7 @@ export function createMcpDispatcher() {
             capabilities: { tools: {} },
             serverInfo: {
               name: 'echo-memory-mcp',
-              version: '0.1.0'
+              version: '0.2.0'
             }
           }
         };
@@ -313,7 +395,6 @@ export function createMcpDispatcher() {
 }
 
 function startStdioServer() {
-  // Enforce strict stdout guard so stray logs never corrupt JSON-RPC frames
   const rawStdoutWrite = process.stdout.write.bind(process.stdout);
   console.log = (...args) => {
     process.stderr.write(args.join(' ') + '\n');
