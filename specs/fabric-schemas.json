@@ -1,0 +1,124 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/jason420247/Echo-memory-fabricks/specs/fabric-schemas.json",
+  "title": "Echo-Memory-Fabricks Canonical Schemas (v0.1.0)",
+  "license": "Apache-2.0",
+  "$defs": {
+    "MemoryTier": {
+      "type": "string",
+      "enum": [
+        "FLUID_KINETIC",
+        "TICK_RAM",
+        "HOLD_RAM",
+        "SOLID_STATE",
+        "ROM",
+        "CASCADE_HOLD",
+        "SEED_RAM"
+      ]
+    },
+    "BelnapValue": {
+      "type": "string",
+      "enum": ["TRUE", "FALSE", "NEITHER", "BOTH"]
+    },
+    "ProvenanceOrigin": {
+      "type": "string",
+      "enum": ["OPERATOR", "SYSTEM", "COMBINED", "UNKNOWN"]
+    },
+    "ProvenanceRecord": {
+      "type": "object",
+      "required": ["artifactId", "origin", "contributions", "chain", "recordedAt", "recordedBy"],
+      "properties": {
+        "artifactId": { "type": "string", "minLength": 1 },
+        "origin": { "$ref": "#/$defs/ProvenanceOrigin" },
+        "contributions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["contributor", "part", "confidence"],
+            "properties": {
+              "contributor": { "type": "string", "enum": ["OPERATOR", "SYSTEM"] },
+              "part": { "type": "string", "minLength": 1 },
+              "confidence": { "type": "number", "minimum": 0, "maximum": 1 }
+            }
+          }
+        },
+        "chain": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["from", "to", "relation"],
+            "properties": {
+              "from": { "type": "string" },
+              "to": { "type": "string" },
+              "relation": {
+                "type": "string",
+                "enum": ["DERIVED_FROM", "REFINED", "COMBINED_WITH", "CORRECTED_BY", "SEEDED_BY"]
+              }
+            }
+          }
+        },
+        "recordedAt": { "type": "string" },
+        "recordedBy": { "type": "string" }
+      }
+    },
+    "InverseCommitEntry": {
+      "type": "object",
+      "required": [
+        "commitSha",
+        "parentCommitSha",
+        "forwardOp",
+        "inverseOp",
+        "preStateHash",
+        "postStateHash",
+        "timestamp"
+      ],
+      "properties": {
+        "commitSha": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "parentCommitSha": { "type": "string" },
+        "forwardOp": {
+          "type": "object",
+          "required": ["name"],
+          "properties": {
+            "name": { "type": "string", "minLength": 1 },
+            "params": { "type": "object" }
+          }
+        },
+        "inverseOp": {
+          "type": "object",
+          "required": ["name"],
+          "properties": {
+            "name": { "type": "string", "minLength": 1 },
+            "params": { "type": "object" }
+          }
+        },
+        "preStateHash": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "postStateHash": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "timestamp": { "type": "string" }
+      }
+    },
+    "ContextActuationCapsule": {
+      "type": "object",
+      "required": [
+        "schemaVersion",
+        "name",
+        "function",
+        "temporalProgression",
+        "startAnchor",
+        "closeOutState",
+        "deliberateFutureContextHook",
+        "capsuleSha256"
+      ],
+      "properties": {
+        "schemaVersion": { "const": "echo-fabricks.capsule/v1" },
+        "name": { "type": "string", "minLength": 1 },
+        "function": { "type": "string", "minLength": 1 },
+        "temporalProgression": { "type": "object" },
+        "startAnchor": { "type": "object" },
+        "closeOutState": { "type": "object" },
+        "deliberateFutureContextHook": { "type": "object" },
+        "provenance": { "$ref": "#/$defs/ProvenanceRecord" },
+        "capsuleSha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+      }
+    }
+  }
+}

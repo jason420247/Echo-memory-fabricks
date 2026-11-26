@@ -1,0 +1,91 @@
+{
+  "schemaVersion": "echo-fabricks.benchmark-dossier/v1",
+  "license": "Apache-2.0",
+  "evidenceGrade": "MEASURED",
+  "executionSubstrate": "LOCAL_CPU",
+  "seedCount": 5,
+  "seeds": [
+    101,
+    102,
+    103,
+    104,
+    105
+  ],
+  "aggregates": {
+    "base243TritsPerByte": 5,
+    "meanQ4EightSlotRecall": 1,
+    "medianChannelEchoWhitenessReduction": 0.59503,
+    "dormantNestedReductionBitIdentical": true,
+    "adversarialSkillPayloadsBlocked": "5/5"
+  },
+  "gates": {
+    "gateBase243FiveX": true,
+    "gateQ4AssociativeRecall": true,
+    "gateDormantBitIdenticalReduction": true,
+    "gateWWhitenessReductionGe025": true,
+    "gateSkillAdversarialBlock100Pct": true
+  },
+  "trials": [
+    {
+      "seed": 101,
+      "evidenceGrade": "MEASURED",
+      "executionScope": "LOCAL_CPU",
+      "base243TritsPerByte": 5,
+      "fbrkFrameBytes": 241,
+      "q4EightSlotRecall": 1,
+      "channelEchoDormantBitIdentical": true,
+      "channelEchoWhitenessReduction": 0.495508,
+      "sheafInitialDirichletEnergy": 22.76407115,
+      "sheafFinalDirichletEnergy": 0
+    },
+    {
+      "seed": 102,
+      "evidenceGrade": "MEASURED",
+      "executionScope": "LOCAL_CPU",
+      "base243TritsPerByte": 5,
+      "fbrkFrameBytes": 241,
+      "q4EightSlotRecall": 1,
+      "channelEchoDormantBitIdentical": true,
+      "channelEchoWhitenessReduction": 0.733527,
+      "sheafInitialDirichletEnergy": 30.52208806,
+      "sheafFinalDirichletEnergy": 0
+    },
+    {
+      "seed": 103,
+      "evidenceGrade": "MEASURED",
+      "executionScope": "LOCAL_CPU",
+      "base243TritsPerByte": 5,
+      "fbrkFrameBytes": 241,
+      "q4EightSlotRecall": 1,
+      "channelEchoDormantBitIdentical": true,
+      "channelEchoWhitenessReduction": 0.59503,
+      "sheafInitialDirichletEnergy": 11.07735057,
+      "sheafFinalDirichletEnergy": 0
+    },
+    {
+      "seed": 104,
+      "evidenceGrade": "MEASURED",
+      "executionScope": "LOCAL_CPU",
+      "base243TritsPerByte": 5,
+      "fbrkFrameBytes": 241,
+      "q4EightSlotRecall": 1,
+      "channelEchoDormantBitIdentical": true,
+      "channelEchoWhitenessReduction": 0.569595,
+      "sheafInitialDirichletEnergy": 17.81419373,
+      "sheafFinalDirichletEnergy": 0
+    },
+    {
+      "seed": 105,
+      "evidenceGrade": "MEASURED",
+      "executionScope": "LOCAL_CPU",
+      "base243TritsPerByte": 5,
+      "fbrkFrameBytes": 241,
+      "q4EightSlotRecall": 1,
+      "channelEchoDormantBitIdentical": true,
+      "channelEchoWhitenessReduction": 0.603406,
+      "sheafInitialDirichletEnergy": 19.44591025,
+      "sheafFinalDirichletEnergy": 0
+    }
+  ],
+  "dossierSha256": "68b3e983804b2c03e1c197187e8496d35bb1f24b18bcb21fab1edd8d73d07ad2"
+}

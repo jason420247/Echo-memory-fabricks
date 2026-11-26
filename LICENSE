@@ -1,0 +1,59 @@
+Echo-Memory-Fabricks — Adaptive Multi-Stage Hybrid License
+==========================================================
+
+Copyright (c) 2026 Jason Hurst (jason420247). All rights reserved except as
+expressly granted below.
+
+This repository uses a tiered, path-scoped hybrid licensing model designed to
+enable open technical verification, academic/research reproducibility, and
+schema interoperability while preserving sole commercial, consulting, and
+pre-existing background intellectual property rights:
+
+1. INTEROPERABILITY SPECIFICATIONS, SCHEMAS & DOCUMENTATION (`L1` Tier)
+   Paths:
+     - `specs/**`
+     - `docs/**`
+     - `README.md`
+   License:
+     Licensed under the Apache License, Version 2.0 (see `LICENSE-APACHE-2.0`),
+     subject to preservation of attribution and provenance notices in `NOTICE`.
+
+2. EXECUTABLE MEMORY-FABRIC ENGINES, MCP SERVER, SKILLS & UI (`L2` Tier)
+   Paths:
+     - `src/**`
+     - `python/**`
+     - `mcp/**`
+     - `bin/**`
+     - `skills/**`
+     - `ui/**`
+     - `tests/**`
+   Source-Available Non-Competing & Verification Grant:
+     Permission is hereby granted, free of charge, to view, copy, execute,
+     benchmark, and modify the `L2` software solely for:
+       (a) personal study, local evaluation, and benchmark verification;
+       (b) non-commercial academic or independent research reproduction; and
+       (c) evaluating the software for a prospective commercial, consulting,
+           advisory, or government contracting engagement with the Copyright
+           Holder.
+
+   Restrictions Without Separate Commercial / Engagement License:
+     Absent a separate written agreement signed by the Copyright Holder (see
+     `COMMERCIAL-LICENSE.md`), you may NOT:
+       (i)   deploy, host, or offer the `L2` software (or derivative works) in
+             commercial production, managed SaaS, paid API services, or client
+             deliverables;
+       (ii)  strip, falsify, or obscure cryptographic `ProvenanceRecord` chains,
+             `NOTICE` attributions, or `specs/background-ip-ledger.json` seals;
+       (iii) use the `L2` software to build a competing commercial memory,
+             orchestration, or agent-substrate product.
+
+3. SCOPE ISOLATION & NO IMPLIED UPSTREAM GRANT
+   Nothing in this License grants, by implication, estoppel, or otherwise, any
+   patent, copyright, or trade-secret right in any unpublished, private, or
+   upstream systems, architectures, or calibration parameters outside the
+   literal files committed to this repository.
+
+4. DISCLAIMER OF WARRANTY
+   THE SOFTWARE AND SPECIFICATIONS ARE PROVIDED "AS IS", WITHOUT WARRANTY OF
+   ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+   MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT.
