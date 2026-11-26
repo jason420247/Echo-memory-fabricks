@@ -86,8 +86,22 @@ export function runLocalTestPushSimulation(repoRootDir = REPO_ROOT) {
     stdio: 'pipe'
   });
 
-  // Seed bare remote `main` with initial baseline commit (60cec25) if present, else current main
-  execFileSync('git', ['push', bareRepoDir, 'main:refs/heads/main'], {
+  const resolveRefOrNull = (ref) => {
+    const r = spawnSync('git', ['rev-parse', '--verify', ref], {
+      cwd: repoRootDir,
+      encoding: 'utf8'
+    });
+    return r.status === 0 ? r.stdout.trim() : null;
+  };
+
+  const baselineRef =
+    resolveRefOrNull('main') ||
+    resolveRefOrNull('origin/main') ||
+    resolveRefOrNull('HEAD~1') ||
+    resolveRefOrNull('HEAD');
+
+  // Seed bare remote `main` with initial baseline commit
+  execFileSync('git', ['push', bareRepoDir, `${baselineRef}:refs/heads/main`], {
     cwd: repoRootDir,
     env: { ...process.env, EMF_OPERATOR_TRUNK_OVERRIDE: '1' },
     stdio: 'pipe'
@@ -141,10 +155,7 @@ export function runLocalTestPushSimulation(repoRootDir = REPO_ROOT) {
     cwd: repoRootDir,
     encoding: 'utf8'
   }).trim();
-  const originMainSha = execFileSync('git', ['rev-parse', 'origin/main'], {
-    cwd: repoRootDir,
-    encoding: 'utf8'
-  }).trim();
+  const originMainSha = resolveRefOrNull('origin/main') || baselineRef;
 
   const polyglot = verifyThreeWayPolyglotParity(20261125, repoRootDir);
   const pushSlip = evaluatePushJudgment({
@@ -187,10 +198,11 @@ export function runLocalTestPushSimulation(repoRootDir = REPO_ROOT) {
       }).trim()
     : null;
 
-  const diffStatSummary = execFileSync('git', ['diff', '--shortstat', 'main..HEAD'], {
-    cwd: repoRootDir,
-    encoding: 'utf8'
-  }).trim();
+  const diffStatSummary = execFileSync(
+    'git',
+    ['diff', '--shortstat', `${baselineRef}..HEAD`],
+    { cwd: repoRootDir, encoding: 'utf8' }
+  ).trim();
 
   const dossierBody = {
     ok: adversarialBlocked && cleanAccepted && remoteVerifiedSha === headSha,

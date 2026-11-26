@@ -29,8 +29,8 @@
     },
     {
       "path": ".github/workflows/ci.yml",
-      "bytes": 1523,
-      "sha256": "4f0e9fd2febdc20748be4837fc9f17c67cfb771a2e4ede85a7c448bdc1e6f1b3",
+      "bytes": 1562,
+      "sha256": "5c2b9d306f2eaa26d4d085bbcb0e4c5b5f002eda89eb2643757488326eaaadf2",
       "licenseTier": "L2_SOURCE_AVAILABLE_BACKGROUND_IP"
     },
     {
@@ -185,8 +185,8 @@
     },
     {
       "path": "src/composites/index.mjs",
-      "bytes": 8529,
-      "sha256": "8f4a76d2094b98fb00884c6745fd53a947a1e3ff3d3d84861df3f69a7c04a8bb",
+      "bytes": 8982,
+      "sha256": "be594d4cb76a7d8b99816a323a18283822930db595a1d4980be691b117288fc4",
       "licenseTier": "L2_SOURCE_AVAILABLE_BACKGROUND_IP"
     },
     {
@@ -203,8 +203,8 @@
     },
     {
       "path": "src/harness/local-push-sim.mjs",
-      "bytes": 8477,
-      "sha256": "bc69601cda8921cdd6ea87f475e1a3880a3a2faab9141fc171b38266b2287ce8",
+      "bytes": 8777,
+      "sha256": "3c27f20d031506eb8e0dc4964a2a600dcb2037dc4b48748d848a1310793826a7",
       "licenseTier": "L2_SOURCE_AVAILABLE_BACKGROUND_IP"
     },
     {
@@ -292,5 +292,5 @@
       "licenseTier": "L2_SOURCE_AVAILABLE_BACKGROUND_IP"
     }
   ],
-  "ledgerSha256": "c47ac876c8e4c10386f0538bcd857373db7e87dd42bc924ae319e127d62e269f"
+  "ledgerSha256": "9dc67e0aa89310a58b9d9749975cd06b1c419812af4f3e51ee58b3613791d5f4"
 }

@@ -9,11 +9,16 @@
  *    paired with a 4-Gate Offline Quarantine Admission Runner (`admitReturnComposite`).
  */
 
-import { execFileSync } from 'node:child_process';
+import { execFileSync, spawnSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 import { PublicationBoundarySentinel, canonicalJson, sha256Hex } from '../actuation/index.mjs';
 import { runColdHarnessReplay } from '../harness/cold-harness.mjs';
+
+function spawnSyncSafe(cmd, args, cwd) {
+  const res = spawnSync(cmd, args, { cwd, encoding: 'utf8' });
+  return res.status === 0 ? res.stdout.trim() : null;
+}
 
 const FORBIDDEN_LIFECYCLE_HOOKS = [
   'preinstall',
@@ -102,7 +107,16 @@ export function buildBackToSelfReturnComposite(repoRootDir, options = {}) {
     encoding: 'utf8'
   }).trim();
 
-  execFileSync('git', ['bundle', 'create', bundlePath, 'main', headRef], {
+  const bundleRefs = ['HEAD'];
+  const mainCheck = spawnSyncSafe('git', ['rev-parse', '--verify', 'main'], repoRootDir);
+  if (mainCheck) {
+    bundleRefs.unshift('main');
+  }
+  if (headRef && headRef !== 'HEAD' && !bundleRefs.includes(headRef)) {
+    bundleRefs.push(headRef);
+  }
+
+  execFileSync('git', ['bundle', 'create', bundlePath, ...bundleRefs], {
     cwd: repoRootDir,
     stdio: 'pipe'
   });
